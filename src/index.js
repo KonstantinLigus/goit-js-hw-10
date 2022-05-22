@@ -1,5 +1,5 @@
 import './css/styles.css';
-import fetchCountries from './fetchCountries';
+import { fetchCountries } from './fetchCountries';
 
 export const DEBOUNCE_DELAY = 300;
 const URL = 'https://restcountries.com/v3.1/name';
