@@ -43,7 +43,7 @@ function createCountriesList(array) {
     .map(
       ({ name: { common }, flags: { svg } }) =>
         `<li class='item-list'>
-        <img src=${svg} alt="flag" width='60px'>
+        <img src=${svg} alt="flag" width='100px'>
         <p>${common}</p>
       </li>`,
     )
@@ -56,7 +56,7 @@ function createCountry(array) {
         `<ul>
         <li>
           <div class='item'>
-            <img src="${svg}" alt="flag" width='60px' />
+            <img src="${svg}" alt="flag" width='150px' />
             <p>${common}</p>
           </div>
         </li>
