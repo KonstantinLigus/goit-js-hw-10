@@ -6,11 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Homework 10</title>
     <style>
-      .country-list {
+      ul {
         list-style: none;
       }
-      .item-list,
-      .item {
+      .item-list {
         display: flex;
       }
       .item-list:not(:last-child) {
@@ -22,6 +21,17 @@
       p {
         flex-grow: 1;
         margin-left: 5px;
+      }
+      .item {
+        display: flex;
+        font-size: 24px;
+        font-weight: 800;
+      }
+      .text {
+        font-weight: bold;
+      }
+      .text > span {
+        font-weight: normal;
       }
     </style>
   </head>

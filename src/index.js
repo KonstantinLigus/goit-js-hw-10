@@ -15,29 +15,30 @@ refs.inputSearch.addEventListener('input', debounce(handleInputSearch, DEBOUNCE_
 
 function handleInputSearch(event) {
   const name = event.target.value.trim();
-  if (name !== '') {
-    fetchCountries(name)
-      .then(data => {
-        const countriesQuantity = data.length;
-        if (countriesQuantity > 10) {
-          Notify.info('Too many matches found. Please enter a more specific name.');
-        }
-        if (countriesQuantity > 2 && countriesQuantity < 10) {
-          refs.countryInfo.innerHTML = '';
-          refs.countryList.innerHTML = renderCountriesList(data);
-        }
-        if (countriesQuantity === 1) {
-          refs.countryInfo.innerHTML = renderCountry(data);
-          refs.countryList.innerHTML = '';
-        }
-      })
-      .catch(error => {
-        console.error(error);
-      });
+  if (name === '') {
+    return;
   }
+  fetchCountries(name)
+    .then(data => {
+      const countriesQuantity = data.length;
+      if (countriesQuantity > 10) {
+        Notify.info('Too many matches found. Please enter a more specific name.');
+      }
+      if (countriesQuantity > 2 && countriesQuantity < 10) {
+        refs.countryInfo.innerHTML = '';
+        refs.countryList.innerHTML = createCountriesList(data);
+      }
+      if (countriesQuantity === 1) {
+        refs.countryList.innerHTML = '';
+        refs.countryInfo.innerHTML = createCountry(data);
+      }
+    })
+    .catch(() => {
+      Notify.failure('Oops, there is no country with that name');
+    });
 }
 
-function renderCountriesList(array) {
+function createCountriesList(array) {
   return array
     .map(
       ({ name: { common }, flags: { svg } }) =>
@@ -48,19 +49,27 @@ function renderCountriesList(array) {
     )
     .join('');
 }
-function renderCountry(array) {
+function createCountry(array) {
   return array
     .map(
       ({ name: { common }, capital, population, flags: { svg }, languages }) =>
         `<ul>
-  <div class='item'>
-    <img src="${svg}" alt="flag" width='60px' />
-    <p>${common}</p>
-  </div>
-  <p>Capital: ${capital}</p>
-  <p>Population: ${population}</p>
-  <p>Languages: ${Object.values(languages).join(', ')}</p>
-</ul>`,
+        <li>
+          <div class='item'>
+            <img src="${svg}" alt="flag" width='60px' />
+            <p>${common}</p>
+          </div>
+        </li>
+        <li>
+          <p class='text'>Capital: <span>${capital}</span></p>
+        </li>
+        <li>
+          <p class='text'>Population: <span>${population}</span></p>
+        </li>
+        <li>
+          <p class='text'>Languages: <span>${Object.values(languages).join(', ')}</span></p>
+        </li>
+      </ul>`,
     )
     .join('');
 }
